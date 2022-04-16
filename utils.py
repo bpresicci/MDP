@@ -6,6 +6,8 @@ def read_excels(input_name, output_name):
     :param input_name: string
     :param output_name: string
     :return: dataframe, dataframe
+
+    NB: CERCA IL PATH ASSOLUTO LOCALE
     """
     i = pd.read_excel(path.abspath(path.abspath(input_name)))
     o = pd.read_excel(path.abspath(path.abspath(output_name)))
@@ -21,7 +23,7 @@ def convert_to_str (i, o):
     o1 = o.astype(str)
     return i1, o1
 
-def extract_desired_subset(df1, df2, cols):
+def desired_df(df1, df2, cols):
     """
 
     SERVE AD OTTENERE I DATAFRAME CON LE COLONNE DI INTERESSE
@@ -30,9 +32,11 @@ def extract_desired_subset(df1, df2, cols):
     :param df1: dataframe
     :param df2: dataframe
     :param cols: list of desired columns, strings
-    :return: dataframe, dataframe
+    :return: dataframe, dataframe same types as df1 (for df_o1) and df2 (for df_o2)
     """
-    dfo1 = df1.loc[df1['Id'].isin(df2['Id'].tolist()), cols]
-    df_o1 = dfo1.reindex(df2['Id'].tolist())
+    # dfo1 = df1.loc[df1['Id'].isin(df2['Id'].tolist()), cols] questo serve se l'input ha più righe dell'output
+    # se si usa la riga 35, la riga 37 è inutile
+    dfo1 = df1[cols] # riordina le colonne secondo l'ordine della lista in input cols
+    df_o1 = dfo1.reindex(df2['Id'].tolist()) # riordina le righe secondo l'ordine di Id dell'output
     df_o2 = df2[cols]
     return df_o1, df_o2
