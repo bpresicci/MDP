@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 from utils import convert_to_str
 from utils import read_excels
 from utils import desired_df
@@ -9,8 +10,8 @@ from check_null import check_null_changes
 # ottenuto tramite SQL query input.Id = output.Id
 # è meglio di input perchè ha molte meno righe -> read_excels non legge righe inutili
 
-input_name = 'input1.xlsx'
-output_name = 'output.xlsx'
+input_name = 'input1_senza0.xlsx'
+output_name = 'output1_senza0.xlsx'
 
 df_input, df_output = read_excels(input_name, output_name)
 
@@ -21,9 +22,9 @@ df_input, df_output = read_excels(input_name, output_name)
 columns_of_interest = ['Id', 'Title', 'OriginalTitle', 'Year', 'Duration', 'Actors', 'Directors', 'Genres', 'AgeRating', 'Country', 'Distributor', 'ProducerName', 'ContentCategory']
 
 # desired_df RESTITUISCE DUE DATAFRAME CHE ABBIANO LE STESSE COLONNE NELLO STESSO ORDINE
-# E RIORDINA LE RIGHE PER AVERE LE STESSE RIGHE (PER ID) NELLO STESSO ORDINE
 
 df_i, df_o = desired_df(df_input, df_output, columns_of_interest)
+
 
 # null_changes è UNA MATRICE NUMPY DELLE STESSE DIMENSIONI DI df_i E df_o CHE CONTIENE 1, 0, -1
 # SE: L'ELEMENTO IN QUELLA POSIZIONE (eg.  null_changes[0][0]) è 1 ALLORA
@@ -31,11 +32,15 @@ df_i, df_o = desired_df(df_input, df_output, columns_of_interest)
 # SE -1 IN INPUT ERA NON NULL ED IN OUTPUT ERA NULL
 
 null_changes = check_null_changes(df_i, df_o)
-
+#df = pd.DataFrame(null_changes)
+#df.to_excel('null_changes.xlsx')
 # CREA UN GRAFICO A BARRE CHE MOSTRA PER OGNI COLONNA QUANTE RIGHE (CIRCA!!) SON PASSATE DA NULL A NON NULL
 # DICO CIRCA PERCHè FA SOLO UNA SOMMA DEI VALORI DI TUTTE LE RIGHE PER CIASCUNA COLONNA, QUINDI
 # NON SAPPIAMO CON ASSOLUTA PRECISIONE QUANTI +1 CI SONO E QUANTI -1, MA SAPPIAMO SOLO IN GENERALE
 # SE L'ALGORITMO TENDE A RIEMPIRE I NULL O NO
+
+#print(df_i.iloc[32:42, :4])
+#print(df_o.iloc[32:42, :4])
 
 plt.bar(np.arange(null_changes.shape[1]), np.sum(null_changes, axis = 0), tick_label = columns_of_interest)
 plt.xticks(rotation = 45)

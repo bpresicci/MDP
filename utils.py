@@ -36,7 +36,6 @@ def desired_df(df1, df2, cols):
     """
     # dfo1 = df1.loc[df1['Id'].isin(df2['Id'].tolist()), cols] questo serve se l'input ha più righe dell'output
     # se si usa la riga 35, la riga 37 è inutile
-    dfo1 = df1[cols] # riordina le colonne secondo l'ordine della lista in input cols
-    df_o1 = dfo1.reindex(df2['Id'].tolist()) # riordina le righe secondo l'ordine di Id dell'output
+    df_o1 = df1[cols] # riordina le colonne secondo l'ordine della lista in input cols
     df_o2 = df2[cols]
     return df_o1, df_o2

@@ -23,6 +23,10 @@ def check_null_changes(input, output):
     """
     bool_i = pd.isna(input)
     bool_o = pd.isna(output)
+    #df = pd.DataFrame(bool_i)
+    #df.to_excel('bool_i.xlsx')
+    #df = pd.DataFrame(bool_o)
+    #df.to_excel('bool_o.xlsx')
     r = bool_i.values.astype(int) - bool_o.values.astype(int)
 
     # il metodo values restituisce un np.array del dataframe, che sarebbe di booleani, quindi converto in int
