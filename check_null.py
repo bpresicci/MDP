@@ -5,8 +5,7 @@ def check_null_changes(input, output):
     :param input: dataframe
     :param output: dataframe
     :return: numpy matrix of integers, with possible values 1, 0, -1
-    """
-    """
+
     CONTROLLA SE VALORI NULL INPUT SON DIVENTATI NON NULL (E VICEVERSA)
     PD.ISNA() RESTITUISCE TRUE SE è NULL, ELSE FALSE
     r: SE (1-0) = 1 -> IL NULL è STATO SOSTITUITO
@@ -33,4 +32,3 @@ def check_null_changes(input, output):
     # per poter fare la differenza tra gli elementi
 
     return r
-
